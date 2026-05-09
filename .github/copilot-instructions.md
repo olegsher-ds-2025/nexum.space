@@ -2,29 +2,53 @@
 
 ## Project Overview
 
-**nexum.space** is a Jekyll site ("protocol for human evolution") deployed to GitHub Pages at `www.nexum.space`.
+**Nexum** (`www.nexum.space`) is a Jekyll/GitHub Pages site for an AI-era philosophical movement described as "протокол эволюции человека" (protocol for human evolution). Content is in **Russian**.
 
 ## Deployment
 
-- Pushes to `master` automatically trigger the GitHub Actions workflow (`.github/workflows/jekyll-gh-pages.yml`), which builds and deploys the site via `actions/jekyll-build-pages`.
-- No manual deploy step is needed.
+- Pushes to `master` auto-deploy via `.github/workflows/jekyll-gh-pages.yml` using `actions/jekyll-build-pages`.
+- No manual deploy step. Do not delete `CNAME` (it holds the custom domain).
 
 ## Local Development
-
-Jekyll builds from the repository root (`source: ./`). To run locally:
 
 ```bash
 bundle exec jekyll serve
 ```
 
-Requires a `Gemfile` with `gem "jekyll"` (or `gem "github-pages"` for full parity with the GitHub Pages build environment).
+Requires a `Gemfile` with `gem "github-pages"` for parity with the Pages build environment.
 
-## Repository Structure
+## Architecture
 
-This is an early-stage project. As it grows, standard Jekyll conventions apply:
-- `_config.yml` — site configuration
-- `_layouts/` — HTML templates
-- `_includes/` — reusable partials
-- `_posts/` — blog posts (if used)
-- `assets/` — CSS, JS, images
-- `CNAME` — custom domain (`www.nexum.space`), do not delete or rename
+Two Jekyll layouts in `_layouts/`:
+- `home.html` — used by `index.html` only; no `.container` wrapper, full-viewport hero
+- `default.html` — all other pages; wraps content in `.container` with sticky nav
+
+All pages use front matter: `layout`, `title`, `description`.
+
+Site pages (all in repo root as `.md` files, served at clean URLs via `permalink: pretty`):
+
+| URL | File | Content |
+|---|---|---|
+| `/` | `index.html` | Hero + section grid |
+| `/manifesto/` | `manifesto.md` | Philosophy + 6 charter principles |
+| `/protocols/` | `protocols.md` | 5 practices (HTML `.protocol-list` component) |
+| `/initiation/` | `initiation.md` | 5 membership levels (HTML `.levels` component) |
+| `/signals/` | `signals.md` | Signal review + collective forecast |
+| `/nodes/` | `nodes.md` | Local cells/groups |
+| `/cognition/` | `cognition.md` | Cognitive development practices |
+| `/labs/` | `labs.md` | Research + experiments |
+
+## Design System
+
+File: `assets/css/style.css`. CSS custom properties in `:root`:
+- `--bg` `#08080e`, `--bg2` `#0d0d1a` — backgrounds
+- `--accent` `#3366dd` — deep blue highlights
+- `--silver` `#9090b8`, `--white` `#e0e0f0` — text hierarchy
+- `--border` `#181828` — dividers
+
+Key CSS components: `.protocol-list / .protocol-item`, `.levels / .level`, `.section-grid / .section-card`, `.hero-*`. These are used as raw HTML blocks inside Markdown files (Kramdown allows this).
+
+The `.page-subtitle` span goes directly under `h1` on every inner page:
+```html
+<span class="page-subtitle">// описание раздела</span>
+```

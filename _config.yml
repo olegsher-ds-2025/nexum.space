@@ -1,0 +1,16 @@
+title: Nexum
+description: Протокол эволюции человека
+url: "https://www.nexum.space"
+baseurl: ""
+lang: ru
+
+permalink: pretty
+
+markdown: kramdown
+kramdown:
+  input: GFM
+
+exclude:
+  - info.txt
+  - README.md
+  - "*.sh"

@@ -10,6 +10,9 @@ markdown: kramdown
 kramdown:
   input: GFM
 
+plugins:
+  - jekyll-sitemap
+
 exclude:
   - info.txt
   - README.md
